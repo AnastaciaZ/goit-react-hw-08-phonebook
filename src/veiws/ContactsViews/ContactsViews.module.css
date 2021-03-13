@@ -1,0 +1,11 @@
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  width: 550px;
+  padding: 30px;
+  border: solid 3px #3f51b5;
+}
+.loading {
+  text-align: center;
+}
