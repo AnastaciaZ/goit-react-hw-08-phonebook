@@ -27,32 +27,28 @@ class ContactForm extends React.Component {
         event.preventDefault();
 
         if (this.state.name === '') {
-           
-     this.setState({ message: 'Please enter contact name' }) || setTimeout(() => {
-        this.setState({ message: null });
-      }, 2000)
-
-      return;
+            this.setState({ message: 'Please enter contact name' }) || this.alert();
+            return;
         }
-         if (this.state.number === '') { 
-      
-      this.setState({ message: 'Please enter contact number' }) || setTimeout(() => {
-        this.setState({ message: null });
-      }, 2000)
-
-      return;
+        if (this.state.number === '') {
+            this.setState({ message: 'Please enter contact number' }) || this.alert();
+            return;
         }
         
        if (this.props.items.some((item) => item.name === this.state.name)){ 
-            this.setState({ message: `${this.state.name} is already in contacts!` }) || setTimeout(() => {
-        this.setState({ message: null });
-            }, 2000)
+           this.setState({ message: `${this.state.name} is already in contacts!` }) || this.alert();
             return;
         }
     
         this.props.onSubmit(this.state.name, this.state.number);
         this.reset();
     };
+
+    alert = () => {
+        setTimeout(() => {
+        this.setState({ message: null });
+      }, 2000)
+    }
     reset = () => { 
         this.setState({name: '', number: ''});
         };
@@ -90,9 +86,9 @@ class ContactForm extends React.Component {
                     in={message!==null}
                     timeout={250}
                     classNames={styleAlert}
-                    unmountOnExit>
+                unmountOnExit>
                     <AlertMessage message={ message}/>
-                </CSSTransition>
+               </CSSTransition>
 
             </form>   
         );
@@ -104,7 +100,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onSubmit: ( name, number ) => dispatch(contactsOperations.addContact( name, number )),
-})
+    onSubmit: (name, number) => dispatch(contactsOperations.addContact(name, number)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);

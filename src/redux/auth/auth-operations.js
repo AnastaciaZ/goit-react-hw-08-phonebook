@@ -1,5 +1,4 @@
 import axios from 'axios';
-//import getStorage from 'redux-persist/es/storage/getStorage';
 import authAction from './auth-actions';
 
 axios.defaults.baseURL = 'https://goit-phonebook-api.herokuapp.com';
@@ -19,8 +18,10 @@ const register = credentials => async dispatch => {
 
     try {
         const response = await axios.post('/users/signup', credentials);
-       
+
+        token.set(response.data.token);
         dispatch(authAction.registerSuccess(response.data));
+       
     } catch (error) {
         dispatch(authAction.registerError(error.message));
     }
@@ -32,14 +33,46 @@ const logIn = credentials => async dispatch => {
     try {
         const response = await axios.post('/users/login', credentials);
        
+        token.set(response.data.token);
         dispatch(authAction.loginSuccess(response.data));
     } catch (error) {
         dispatch(authAction.loginError(error.message));
     }
  };
 
-const logOut = () => dispatch => { };
+const logOut = () => async dispatch => {
+    dispatch(authAction.logoutRequest());
 
-const getCurrentUser = () => (dispatch, getState) => { };
+    try {
+        await axios.post('/users/logout');
+       
+        token.unset();
+        dispatch(authAction.logoutSuccess());
+    } catch (error) {
+        dispatch(authAction.logoutError(error.message));
+    }
+};
 
-export default { register, logIn, logOut, getCurrentUser };
+const getCurrentUser = () => async (dispatch, getState) => {
+    const {
+        auth: { token: persistedToken },
+    } = getState();
+
+    if (!persistedToken) {
+        return;
+    }
+
+    token.set(persistedToken);
+
+    dispatch(authAction.getCorrentUserRequest());
+
+    try {
+        const response = await axios.get('/users/current');
+        dispatch(authAction.getCorrentUserSuccess(response.data));
+    } catch (error) {
+         dispatch(authAction.getCorrentUserError(error.message));
+    }
+};
+const authOperations = { register, logIn, logOut, getCurrentUser };
+
+export default authOperations;

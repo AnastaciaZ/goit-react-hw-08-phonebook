@@ -5,7 +5,7 @@ const getLoading = state => state.contacts.loading;
 const getFilterName = state => state.contacts.filter;
 
 const getAllContacts = state => state.contacts.items;
- 
+
 const getFilterContacts = createSelector(
     [getAllContacts, getFilterName],
     (contacts, filter) => {
@@ -18,15 +18,3 @@ const getFilterContacts = createSelector(
 const selectors = { getLoading, getFilterName, getAllContacts, getFilterContacts};
 
 export default selectors;
-
-
-
-
-/*const getFilterContacts = state => {
-    const contacts = getAllContacts(state);
-    const filter = getFilterName(state);
-
-     return contacts.filter(({name}) =>
-        name.toLowerCase().includes(filter.toLowerCase()),
-    );
-};*/

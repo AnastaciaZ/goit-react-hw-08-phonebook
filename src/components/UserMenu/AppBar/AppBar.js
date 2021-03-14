@@ -15,8 +15,12 @@ const AppBar = ({isAuthenticated}) => (
     </header>
 );
 
-const mapDispatchToProps = (state) => ({
+const mapStateToProps = state => ({
     isAuthenticated: authSelectors.getIsAuthenticated(state),
 });
 
-export default connect(mapDispatchToProps)(AppBar);
+/*const mapDispatchToProps = (state) => ({
+    isAuthenticated: authSelectors.getIsAuthenticated(state),
+});*/
+
+export default connect(mapStateToProps)(AppBar);

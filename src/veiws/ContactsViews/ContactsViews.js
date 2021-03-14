@@ -8,7 +8,7 @@ import s from '../ContactsViews/ContactsViews.module.css';
 import contactsOperations from '../../redux/contacts/operations';
 import contactsSelectors from '../../redux/contacts/selectors';
   
-    
+
 class ContactsViews extends Component {
 
   componentDidMount() {
@@ -18,10 +18,9 @@ class ContactsViews extends Component {
     return (
       
         <div>
-        <Logo title="Phonebook"/>
+        <Logo title="Phonebook" />
         {this.props.loadingContacts && <h2 className={ s.loading}>Loading...</h2>}
-        <div className={s.container}>
-          
+          <div className={s.container}>
             <ContactForm />
             <Filter />
             <ContactList />

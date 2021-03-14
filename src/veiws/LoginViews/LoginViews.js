@@ -29,7 +29,7 @@ class LoginViews extends Component{
 
         return (
             <div>
-                <Logo title="Page of login" />
+                <Logo title="Login" />
 
                 <div className={s.container}>
                     <form onSubmit={this.handleSubmit}
@@ -70,9 +70,6 @@ const mapDispatchToProps = {
     onLogin: authOperations.logIn,
 };
 
-/*const mapDispatchToProps = dispatch => ({
-    onLogin: (data) => dispatch(authOperations.logIn(data)),
-});*/
 
 export default connect(null, mapDispatchToProps)(LoginViews);
 

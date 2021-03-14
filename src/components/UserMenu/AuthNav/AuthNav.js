@@ -18,13 +18,9 @@ const AuthNav = () => (
             className={s.NavigationLink}
             activeClassName={s.NavigationLinkActive}
             >
-            Log in
+            Login
        </NavLink>
     </div>
 );
 
 export default AuthNav;
-
-/*
-<div>Логин</div>
-        <div>Регистрация</div>*/

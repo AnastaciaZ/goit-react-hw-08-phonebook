@@ -20,7 +20,7 @@ class RegisterViews extends Component{
         e.preventDefault();
 
         this.props.onRegister(this.state);
-
+        
         this.setState({ name: '', email: '', password: '' });
     };
 
@@ -30,7 +30,7 @@ class RegisterViews extends Component{
 
         return (
             <div>
-                <Logo title="Page of Registration" />
+                <Logo title="Registration" />
                 
                 <div className={s.container}>
                     <form onSubmit={this.handleSubmit}

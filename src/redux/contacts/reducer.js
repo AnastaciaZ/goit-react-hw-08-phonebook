@@ -10,20 +10,20 @@ import {
     fetchContactRequest,
     fetchContactSuccess,
     fetchContactError,
-    changeFilter
+    changeFilter,
 } from './actions';
 
 const initialState = {
     contacts: {
         items: [],
-        filter: ''
-    }
-}
+        filter: '',
+    },
+};
  
 const items = createReducer(initialState.contacts.items, {
     [fetchContactSuccess]: (_, {payload})=>payload,
     [addContactSuccess]: (state, action) => [action.payload, ...state],
-    [deleteContactSuccess]: (state, action) => state.filter(contact => contact.id !== action.payload)
+    [deleteContactSuccess]: (state, action) => state.filter(contact => contact.id !== action.payload),
 });
 
 const loading = createReducer(false, {
@@ -35,7 +35,7 @@ const loading = createReducer(false, {
     [addContactError]: () => false,
     [deleteContactRequest]: () => true,
     [deleteContactSuccess]: () => false,
-    [deleteContactError]:()=> false,
+    [deleteContactError]: () => false,   
 });
 
 const filter = createReducer(initialState.contacts.filter, {

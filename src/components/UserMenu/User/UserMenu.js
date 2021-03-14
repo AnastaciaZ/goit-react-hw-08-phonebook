@@ -1,14 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import authSelectors from '../../../redux/auth/auth-selectors';
+import authOperations from '../../../redux/auth/auth-operations';
 import Button from '../../Button/Button'
 import s from './UserMenu.module.css';
 
-const UserMenu = ({avatar, name, onLogout }) => (
+const UserMenu = ({email, onLogout }) => (
     <div className={s.container}>
-        <img src={avatar} alt="" className={ s.avatar}/>
-        <span className={s.name}>Welcome, {name}</span>
+         <span className={s.name}>Welcome, {email}</span>
          <Button label="Logout" type="button" onClick={onLogout} />
     </div>
 
 );
 
-export default UserMenu;
+const mapStateToProps = state => ({
+    email: authSelectors.getUserEmail(state),
+});
+
+const mapDispatchToProps = {
+    onLogout: authOperations.logOut
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);
