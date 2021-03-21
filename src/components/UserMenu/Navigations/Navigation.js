@@ -19,7 +19,7 @@ const Navigation = ({isAuthenticated}) => (
             exact
             className={s.NavigationLink}
             activeClassName={s.NavigationLinkActive}>
-                Phonebook
+            Phonebook
             </NavLink>
         )}
     </div>

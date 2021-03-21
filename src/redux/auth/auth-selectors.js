@@ -1,7 +1,11 @@
+const getAuthLoading = state => state.auth.loading;
+
 const getIsAuthenticated = state => state.auth.isAuthenticated;
 
-const getUserEmail = state => state.auth.user.email;
+const getUserName = state => state.auth.user.name;
 
-const authSelectors = { getIsAuthenticated, getUserEmail };
+const getAuthError = state => state.auth.error;
+
+const authSelectors = { getAuthLoading, getIsAuthenticated, getUserName, getAuthError };
 
 export default authSelectors;

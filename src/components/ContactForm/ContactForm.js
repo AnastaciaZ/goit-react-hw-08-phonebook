@@ -2,12 +2,15 @@ import React from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
 import contactsOperations from '../../redux/contacts/operations';
+import contactsSelectors from '../../redux/contacts/selectors';
+import { clearContactsError } from '../../redux/contacts/actions';
 import shortid from 'shortid';
 import Button from '../Button/Button';
 import AlertMessage from '../Alert/Alert';
 import styleAlert from '../Alert/Alert.module.css';
+import Alert from 'react-bootstrap/Alert';
 import s from '../ContactForm/ContactForm.module.css';
-import contactsSelectors from '../../redux/contacts/selectors';
+
 
 class ContactForm extends React.Component { 
     state = {
@@ -15,6 +18,14 @@ class ContactForm extends React.Component {
         number: '',
         message: null,
     };
+
+    componentDidUpdate() {
+    if (this.props.error) {
+        setTimeout(() => {
+            this.props.clearContactsError();
+        }, 2000);           
+    }
+}
 
     nameInputId = shortid.generate();
 
@@ -56,6 +67,11 @@ class ContactForm extends React.Component {
     render() { 
         const {name, number, message } = this.state;
         return (
+            <>
+            <div className={s.loading}>
+            {this.props.error && <Alert variant={'danger'}>{`ERROR: ${this.props.error}`}</Alert>}
+            </div>
+
             <form className={ s.contactsForm} onSubmit={this.handleSubmit}>
                 <label htmlFor={this.nameInputId} className={ s.labelForm}>  
                     Name
@@ -90,17 +106,20 @@ class ContactForm extends React.Component {
                     <AlertMessage message={ message}/>
                </CSSTransition>
 
-            </form>   
+                </form>
+            </>    
         );
     };
 };
 
 const mapStateToProps = state => ({
     items: contactsSelectors.getAllContacts(state),
+    error: contactsSelectors.getContactsError(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-    onSubmit: (name, number) => dispatch(contactsOperations.addContact(name, number)),
-});
+const mapDispatchToProps = {
+    onSubmit: contactsOperations.addContact,
+    clearContactsError: clearContactsError,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);

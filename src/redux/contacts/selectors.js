@@ -6,6 +6,8 @@ const getFilterName = state => state.contacts.filter;
 
 const getAllContacts = state => state.contacts.items;
 
+const getContactsError = state => state.contacts.error;
+
 const getFilterContacts = createSelector(
     [getAllContacts, getFilterName],
     (contacts, filter) => {
@@ -15,6 +17,6 @@ const getFilterContacts = createSelector(
     },
 );
 
-const selectors = { getLoading, getFilterName, getAllContacts, getFilterContacts};
+const selectors = { getLoading, getFilterName, getAllContacts, getContactsError, getFilterContacts};
 
 export default selectors;
